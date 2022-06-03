@@ -7,7 +7,7 @@
         <ul class="list-unstyled components">
             <li>
                 <a href="#introSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Intro</a>
-                <ul class="collapse list-unstyled" id="introSubmenu">
+                <ul class="list-unstyled" id="introSubmenu">
                     <li>
                         <a href="../01_introduction/introduction.php">Introduction</a>
                     </li>
