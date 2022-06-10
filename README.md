@@ -1,2 +1,2 @@
-# CoursPHP2022
-Cours sur le PHP
+# cours_php
+cours_php2022

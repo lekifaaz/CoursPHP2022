@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-    // déclaration d'une varible PHP
+    // déclaration d'une variable PHP
     $variable1 = "PHP 7"
 ?> <!-- fermeture de la variable PHP -->
 <html lang="fr">
