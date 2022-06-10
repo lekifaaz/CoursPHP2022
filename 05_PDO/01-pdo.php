@@ -156,7 +156,8 @@ require_once('../inc/functions.php')
                                   }
                                   echo "</ul>";
                                   echo "</div>";
-                                   // <!-- EXO 1/ dnas un h2, compter le nombre d'employés
+                                  
+                                   // <!-- EXO 1/ dans un h2, compter le nombre d'employés
                             // 2/ puis afficher toutes les informations des employés dans un tableau HTML triés par ordre alphabétique de nom
                             
                              
