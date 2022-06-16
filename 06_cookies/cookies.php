@@ -39,7 +39,7 @@ setcookie('langue', $langue, $expiration); // fonction qui fabrique le cookie , 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
 
-    <title>Cours PHP7 - PDO</title>
+    <title>Cours PHP7 - $_COOKIE</title>
 
     <!-- mes styles -->
     <link rel="stylesheet" href="../css/style.css">

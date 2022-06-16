@@ -1,28 +1,7 @@
 <?php
 require_once('../inc/functions.php');
 
-// Si une langue est passée dans l'URL (l'internaute a cliqué sur un lien), on enverra cette langue dans le cookie
-if(isset($_GET['langue'])){
-    $langue =($_GET['langue']);
-    jeprint_r($langue);
-    // jevar_dump($langue);
-}else if(isset($_COOKIE['langue'])){ //sinon si on a reçu un cookie appelé langue on a la valeur su site qui prendra la valeur de la langue
-    $langue =($_COOKIE['langue']);
-    jeprint_r($langue);
-} else { //sinon par défaut
-    $langue = 'fr';
-    jeprint_r($langue);
-}
-
-// Envoie du cookie avec l'info sur la langue à l'intérieur
-
-$expiration = time() + 365*24*60*60; //va nous donner la date actuelle exprimée en secondes
-// time nous donne la date du jour depuis le début de UNIX (1970), date exprimée en secondes
-jeprint_r($expiration); //j'ajoute à la date du jour les données d'une année en secondes
-setcookie('langue', $langue, $expiration); // fonction qui fabrique le cookie , ce cookie est appelé langue avec la valeur de $langue et la valeur de $expiration
-
-// Il n'existe pas de fonction prédéfinie qui permette de supprimer un cookie. Pour rendre un cookie invalide , on utilise setcookie() avec le nom concerné et en mettant une date d'expiration à 0 ou antérieur à la date actuelle
-
+session_start(); //permet de créer un fichier de session avec son identifiant ou d'ouvrir la session si l'identifiant existe déjà ou si on a reçu un cookie contenant l'id.
 ?>
 <!doctype html>
 <html lang="fr">
@@ -39,7 +18,7 @@ setcookie('langue', $langue, $expiration); // fonction qui fabrique le cookie , 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
 
-    <title>Cours PHP7 - PDO</title>
+    <title>Cours PHP7 -$_SESSION</title>
 
     <!-- mes styles -->
     <link rel="stylesheet" href="../css/style.css">
@@ -48,8 +27,10 @@ setcookie('langue', $langue, $expiration); // fonction qui fabrique le cookie , 
 <body class="bg-light">
     <!-- JUMBOTRON -->
     <div class="jumbotron bg-dark text-white text-center">
-        <h1 class="display-3">Cours PHP7 -Cookies</h1>
-        <p class="lead">La superglobale $_COOKIE : un cookie est un petit fichier de 4ko maxi déposé par le serveur web sur le poste de l'internaute et qui contient des informations</p>
+        <h1 class="display-3">Cours PHP7 - la variable $_SESSION</h1>
+        <p class="lead">Une session est un système mis en oeuvre dans le code PHP permettant de conserver sur le serveur, dans un fichier temporaire, des informations relatives à un internaute.
+
+            L'avantage d'une session c'est que les données seront enregistrées dans un fichier sur le serveur disponible et consultable sur l'ensemble des pages durant toute la navigation de l'internaute.</p>
 
 
     </div>
@@ -72,22 +53,51 @@ setcookie('langue', $langue, $expiration); // fonction qui fabrique le cookie , 
                     <hr>
                     <h2 class="col-sm-12 text-center" id="definition">1. Introduction</h2>
                     <div class="col-sm-12">
-                        <p>Les cookies sont automatiquement renvoyés au serveur web par le navigateur. Lorsque l'internaute navigue dans les pages concernées par le ou les cookies, PHP permet de récupérer très facilement les données contenues dans un cookie. Non seulement on peut le fabriquer mais on peut aussi le récupérer. Les informations sont stockées dans une superglobale : $_COOKIE . </p>
-                        <p class="alert alert-danger w-50 mx-auto">Un cookie étant sauvegardé sur le poste de l'internaute, il peut être modifié, détourné ou volé!!!! On n'y met aucune information sensible, comme les références bancaires, le numéro de sécu , le mot de passe, ni même le contenu d'un  panier d'achat.</p>
-                        <div class="w-75 text-center mx-auto">
-                        <!-- On envoie la langue choisie par l'URL : la valeur "fr" par exemple est récupérée dans la superglobale $_GET-->
-
-                        <a href="?langue=fr" class="btn btn-primary">Français</a> -
-                        <a href="?langue=es" class="btn btn-success">Espagnol</a> -
-                        <a href="?langue=it" class="btn btn-danger">Italien</a> -
-                        <a href="?langue=ru" class="btn btn-warning">Russe</a> 
-                        
+                        <p>Les données du fichier de session sont accessibles et manipulables à partir de la superglobale $_SESSION</p>
                         <?php
-                            echo "<hr><br><h3>Langue du site : $langue</h3>";
-                            echo time() .": la date du jour exprimée en secondes depuis le 1er janvier 1970.";
+                        $_SESSION['pseudo'] = 'Tintin';
+                        $_SESSION['mdp'] = 'Vol747';
+                        $_SESSION['email'] = 'tintin@milou.be';
+
+                        echo "<p class=\"alert alert-success\">La session est bien remplie !</p>";
+                        jeprint_r($_SESSION);
+
                         ?>
+                        <p>Principe de session: un fichier temporaire appelé session est créé sur le serveur , avec un identifiant unique. Cette session est lié à un internaute dans le même temps avec un cookie est déposé sur le poste de l'internaute avec l'identifiant (au nom PHPSESSID) . Ce cookie est détruit lorsque l'on quitte le navigateur</p>
+                        <p>Le fichier de session peut contenir des informations très sensibles!!!! Il n'est donc pas accessible par l'internaute</p>
+                        <p>Il est possible de vider une partie de la session avec le code suivant <code>unset($_SESSION['mdp']);</code></p>
+
+                        <?php
+                        unset($_SESSION['mdp']);
+                        jeprint_r($_SESSION);
+                        ?>
+                        <p>Pour supprimer automatiquement une session : <code>session_destroy();</code>Il supprime totalement la session ainsi que son fichier temporaire. </p>
+
+
+                        <?php
+                        session_destroy();
+                        jeprint_r($_SESSION);
+                        ?>
+
+                        <p>Nous avons effectué un session_destroy() mais il n'est exécuté qu'à la fin de notre script. Nous voyons encore ici le contenu de la session mais le fichier temporaire dans le dossier Temp a bien été supprimé. ce fichier contient les infos de session et elles sont accessibles à <code>session_start()</code> </p>
+                        <p>Si on a besoin des informations de cette page, le code <code>session_start()</code>devra être placé au début de la page</p>
+
+                        <?php
                         
-                        </div>
+                         if(isset($_SESSION['pseudo']))   {
+                            echo "Votre pseudo est :". $_SESSION['pseudo']. "<br>";
+                         }
+                         else{
+                            echo '<form method="post" action="">
+                            <label for="pseudo">Pseudo:</label><br>
+                            <input type="text" name="pseudo" value= ""><br>
+                            <input type="submit"value="Envoyez">
+                            </form>';
+                         }
+                        ?>
+
+
+
                     </div><!-- fin de la col-->
 
                 </div><!-- fin de la rangée (row)-->

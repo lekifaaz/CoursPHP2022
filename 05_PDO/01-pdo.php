@@ -1,4 +1,4 @@
-<<?php
+<?php
 require_once('../inc/functions.php');
 ?>
 <!doctype html>
@@ -125,7 +125,7 @@ require_once('../inc/functions.php');
                         $ligne = $requete->fetch(PDO::FETCH_ASSOC);
                         // jeprint_r($ligne);
                         echo "<ul><li>ID:" . $ligne['id_employes'] . "</li><li>Service:" . $ligne['service'] . "</li><li>Prénom :" . $ligne['prenom'] . "</li><li>Nom :" . $ligne['nom'] . "</li>";
-                        print_r($ligne);
+                        jeprint_r($ligne);
                         ?>
                     </div>
                     <!--fin de col-->

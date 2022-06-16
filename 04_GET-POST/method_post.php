@@ -1,10 +1,8 @@
-<?php
-require_once('../inc/functions.php')
-?>
-
+<?php 
+    require_once('../inc/functions.php');
+?> 
 <!doctype html>
 <html lang="fr">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -17,79 +15,119 @@ require_once('../inc/functions.php')
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
 
-    <title>Cours_PHP2022-la méthode $_POST</title>
+    <title>Cours PHP7 - Exos pratiques - 1</title>
 
     <!-- mes styles -->
     <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body class="bg-dark">
     <!-- JUMBOTRON -->
-    <div class="jumbotron  text-center">
-        <h1 class="display-3">Cours_PHP2022 - Méthode POST</h1>
-        <hr>
-        <p class="lead bg-light">La méthode POST réceptionne les données d'un formulaire, $_POST est une superglobale</p>
+    <div class="jumbotron bg-dark text-white text-center">
+        <h1 class="display-3">Cours PHP7 - La méthode POST</h1>
+        <p class="lead">La méthode POST réceptionne les données d'un formulaire, $_POST est une superglobale.</p>
     </div>
-    <!-- RANGEE PRINCIPALE -->
-    <div class="row bg-light">
-        <!-- La barre de navigation en include (penser à toujours ajouter le JS en fin de page)    --->
+
+    <!-- RANGÉE PRINCIPALE -->
+    <div class="row">
+        <!-- LA NAVIGATION EN INCLUDE (penser à ajouter le JS qui va avec en fin de page) -->
         <?php
-        require('../inc/sidenav.inc.php');
+        require('../inc/sidenav.inc.php')
         ?>
+
         <!-- ============================================================== -->
         <!-- Contenu principal -->
         <!-- ============================================================== -->
         <div class="col-sm-8">
             <main class="container-fluid">
+                <!-- BOUTON DE LA NAV -->
+                <button type="button" id="sidebarCollapse" class="navbar-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+                </button>
+
                 <div class="row">
                     <hr>
-                    <h2 class="col-sm-12 text-center" id="definition"><u>1- Formulaire</u></h2>
+                    <div class="col-sm-12 col-md-6">
+                        <h2 class="col-sm-12 text-center" id="definition">I. Formulaire</h2>
+                        <ul>
+                            <li>Un formulaire doit toujours être dans une balise <code>&#8249;form></code> pour fonctionner.</li>
+                            <li>L'attribut method indique comment les données vont circuler vers le PHP.</li>
+                            <li>L'attribut action indique l'URL de destination des données (si l'attribut action est vide, les données vont vers le même script ou la même page).</li>
+                            <li>Ensuite sur les names il ne faut pas les oublier sur les formulaires ; ils constituent les indices de $_POST qui réceptionne les données.</li>
+                        </ul>
+
+                        <form action="" method="POST" class="w-75 mx-auto">
+
+                            <div class="form-group">
+                                <label for="prenom">Prénom</label>
+                                <input type="text" class="form-control" id="prenom" name="prenom"  required>
+                            </div><!-- fin champs prénom -->
+
+                            <div class="form-group">
+                                <label for="">Nom</label>
+                                <input type="text" class="form-control" id="nom" name="nom" required>
+                            </div><!-- fin champs nom -->
+
+                            <div class="form-group">
+                                <label for="">Votre commentaire</label>
+                                <textarea class="form-control"  id="commentaire" rows="2" name="commentaire" required></textarea>
+                            </div><!-- fin champs commentaire -->
+
+                            <button type="submit" class="btn btn-small btn-info">Envoyer</button>
+
+                        </form><!-- fin du formulaire -->
+                        
+                    </div><!-- fin col -->
+
+                    <div class="col-sm-12 col-md-6">
+                    <h2 class="col-sm-12 text-center"><u> 2. Récupération des données</u></h2>
                     <ul>
-                        <li>Un formulaire doit toujours être dans une balise <code>form</code> pour fonctionner.</li>
-                        <li>L'attribut method indique comment les données vont circuler vers le PHP.</li>
-                        <li>L'attribut action indique l'URL de destination des données (si l'attribut est vide, les données vont vers le même script ou la même page).</li>
-                        <li>Ensuite sur les names il ne faut pas les oublier sur les formulaires: ils constituent les indices de $_POST qui réceptionne les données.</li>
+                     <li>$_POST est une superglobale qui permet de récupérer les données saisies dans un formulaire</li>
+                        <li>$_POST est donc un tableau(array) et il est disponible dans tous les contextes du script</li>
+                        <li>le tableau $_POST se remplit de la manière suivante : <code>
+                            $_POST = array(<br>
+                            'name1' => 'valeur1'<br>
+                            'nameN' =>'valeurN'<br>)
+                        </code></li>
+                        <li>Donc soit name1 ou nameN correspondent aux attributs "name" du formulaire, et où valeur1 et valeurN correspondent aux valeurs saisies par l'internaute.</li>
                     </ul>
 
-                    <form action="../05_exos/method_form_traitement.php" method="POST" class="w-75 mx-auto">
-                        <div class="form-group">
-                            <label for="prenom">Prénom</label>
-                            <input type="text" class="form-control" id="prenom" name="prenom" required>
-                        </div><!-- Fin champs prénom -->
+                    <?php
+                        if(!empty($_POST)){// si $_POST n'est pas vide , c'est qu'il est rempli et donc que le formulaire a été envoyé, notez qu'en l'état on peut l'envoyer avec des champs vides, les valeurs des $_POST étant alors des strings vides. En effet on peut avoir des informations non obligatoires dans un formulaire et les input ne seront donc jamais remplis.
+                            // jevardump($_POST);
+                            echo "<div class=\"alert alert-success w-100 mx-auto\"><p>Prénom: " .$_POST['prenom']. "</p>";
+                            echo "<p>Nom: " .$_POST['nom']. "</p>";
+                            echo "<p>Commentaire: " .$_POST['commentaire']. "</p></div>";
 
-                        <div class="form-group">
-                            <label for="nom">Nom</label>
-                            <input type="text" class="form-control" id="nom" name="nom" required>
-                        </div><!-- Fin champs nom -->
+                        }
+                    ?>
 
-                        <div class="form-group">
-                            <label for="commentaire">Commentaire</label>
-                            <textarea class="form-control" id="commentaire" row="2" name="commentaire" required></textarea>
-                        </div><!-- Fin champs commentaire -->
+                       
+                    </div><!-- fin col -->
 
-                        <button type="submit" class="btn btn-info">Envoyer</button>
-
-                    </form>
-
-
-                </div><!-- Fin de la rangée -->
+                </div><!-- fin de la rangée -->
 
                 <hr>
                 <br><br>
 
-                <?php
-                // jevar_dump($_POST);
-                ?> 
-
             </main>
+        </div> <!-- FIN DE LA PARTIE PRINCIPALE COL-8 -->
+
+        <div class="col-sm-2 aside">
+            <ul>
+                <!-- DES ANCRES POUR LE COURS ET LES EXOS -->
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+                <li></li>
+            </ul>
         </div>
-
-
     </div>
-    <!-- FIN DU CONTENU PRINCIPAL -->
+
     <!-- LE FOOTER EN REQUIRE -->
     <?php
-    require("../inc/footer.inc.php")
+        require("../inc/footer.inc.php")
     ?>
 
     <!-- Optional JavaScript -->
@@ -101,5 +139,4 @@ require_once('../inc/functions.php')
     <script src="../inc/sidenav.js"></script>
 
 </body>
-
 </html>
