@@ -47,9 +47,56 @@
       <main class="container bg-white m-4 mx-auto p-4">
         <div class="row">
             <div class="col-sm-12 col-md-9">
-                <h1>La boutique - Inscrivez-vous</h1>
+                <h1>La boutique - Inscrivez-vous !</h1>
+                <form action="" method="POST" class="w-75 mx-auto">
+                  <div class="form-group">
+                    <label for="pseudo">Pseudo</label>
+                    <input type="text" class="form-control" id="pseudo" name="pseudo" value="<?php echo $_POST['pseudo'] ??'';?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="mdp">Mot de passe</label>
+                    <input placeholder="Votre mot de passe doit contenir entre 8 et 20 caractères." type="password" class="form-control" id="mdp" name="mdp" value="<?php echo $_POST['mdp'] ??'';?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" class="form-control" id="nom" name="nom" value="<?php echo $_POST['nom'] ??'';?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="prenom">Prénom</label>
+                    <input type="text" class="form-control" id="prenom" name="prenom" value="<?php echo $_POST['prenom'] ??'';?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="mail" name="mail" value="<?php echo $_POST['mail'] ??'';?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="civilite">Genre</label>
+                    <select name="civilite" id="civilite" class="form-select">
+                      <option selected>Veuillez sélectionner un genre</option>
+                      <option value="f">Féminin</option>
+                      <option value="m">Masculin</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="adresse">Adresse</label>
+                    <input type="text" class="form-control" id="adresse" name="adresse" value="<?php echo $_POST['adresse'] ??'';?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="code_postal">Code postal</label>
+                    <input type="text" class="form-control" id="code_postal" name="code_postal" value="<?php echo $_POST['code_postal'] ??'';?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="ville">Ville</label>
+                    <input type="text" class="form-control" id="ville" name="ville" value="<?php echo $_POST['ville'] ??'';?>" required>
+                  </div>
+                  <input type="submit" class="btn btn-secondary my-2">
+                  <input type="reset" class="btn btn-secondary my-2">
+
+
+                </form>
             </div>
         </div>
+        <!-- Fin de la rangée -->
 
       </main>
     <!-- Bootstrap JavaScript Libraries -->
